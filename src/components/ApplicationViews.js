@@ -17,7 +17,7 @@ export const ApplicationViews = () => {
                         <MovieHome />
                     </Route>
                     
-                <Route exact path="/movie/:movieId(\d+)">
+                    <Route exact path="/movie/:movieId(\d+)">
                         <MovieDetail />
                     </Route>
 

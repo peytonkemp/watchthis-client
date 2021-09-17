@@ -6,7 +6,7 @@ export const Logout = () => {
     function handleLogOut() {
         sessionStorage.setItem("app_user_id", '');
         sessionStorage.clear();
-        history.push("/login"); // whichever component you want it to route to
+        history.push("/login");
     }
 
     return (
