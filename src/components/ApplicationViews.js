@@ -6,6 +6,7 @@ import { MovieProvider } from "./movies/MovieProvider";
 // import { CourseProvider } from "./courses/CourseProvider"
 import { MovieDetail } from "./movies/MovieDetail";
 import { MovieHome } from "./movies/MovieHome";
+import { MovieFilters } from "./movies/MovieFilters";
 
 
 export const ApplicationViews = () => {
@@ -20,7 +21,10 @@ export const ApplicationViews = () => {
                     <Route exact path="/movie/:movieId(\d+)">
                         <MovieDetail />
                     </Route>
-
+                    
+                    <Route exact path="/filters">
+                        <MovieFilters />
+                    </Route>
 
             </MovieProvider>
         </>
