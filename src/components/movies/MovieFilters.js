@@ -12,13 +12,13 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormLabel from '@mui/material/FormLabel';
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { MovieContext } from "./MovieProvider"
 import { useContext } from "react";
 
 export const MovieFilters = () => {
     const { genres, getGenres } = useContext(MovieContext)
-
+    const [runtime, setRuntime] = React.useState(0)
 
     useEffect(() => {
         getGenres()
@@ -47,27 +47,28 @@ export const MovieFilters = () => {
         },
     };
 
-    const names = [
-        'Oliver Hansen',
-        'Van Henry',
-        'April Tucker',
-        'Ralph Hubbard',
-        'Omar Alexander',
-        'Carlos Abbott',
-        'Miriam Wagner',
-        'Bradley Wilkerson',
-        'Virginia Andrews',
-        'Kelly Snyder',
-    ];
+    // const names = [
+    //     'Oliver Hansen',
+    //     'Van Henry',
+    //     'April Tucker',
+    //     'Ralph Hubbard',
+    //     'Omar Alexander',
+    //     'Carlos Abbott',
+    //     'Miriam Wagner',
+    //     'Bradley Wilkerson',
+    //     'Virginia Andrews',
+    //     'Kelly Snyder',
+    // ];
+
 
     const MultipleSelectCheckmarks = () => {
-        const [personName, setPersonName] = React.useState([]);
+        const [genres, setGenres] = React.useState([]);
 
         const handleChange = (event) => {
             const {
                 target: { value },
             } = event;
-            setPersonName(
+            setGenres(
                 // On autofill we get a the stringified value.
                 typeof value === 'string' ? value.split(',') : value,
             );
@@ -76,28 +77,36 @@ export const MovieFilters = () => {
         return (
             <div>
                 <FormControl sx={{ m: 1, width: 300 }}>
-                    <InputLabel id="demo-multiple-checkbox-label">Tag</InputLabel>
+                    <InputLabel id="demo-multiple-checkbox-label">Genres</InputLabel>
                     <Select
                         labelId="demo-multiple-checkbox-label"
                         id="demo-multiple-checkbox"
                         multiple
-                        value={personName}
+                        value={genres}
                         onChange={handleChange}
                         input={<OutlinedInput label="Tag" />}
                         renderValue={(selected) => selected.join(', ')}
                         MenuProps={MenuProps}
-                    >
-                        {names.map((name) => (
-                            <MenuItem key={name} value={name}>
-                                <Checkbox checked={personName.indexOf(name) > -1} />
-                                <ListItemText primary={name} />
+                        >
+                        {genres.map(genre => (
+                            <MenuItem key={genre} value={genre}>
+                                <Checkbox checked={genres.indexOf(genre) > -1} />
+                                <ListItemText primary={genre.name} />
                             </MenuItem>
                         ))}
+                        {/* {genres.genres.map(g => {
+                            return <div>
+                                <h3>{g.}</h3>
+                                </div>
+                        })} */}
                     </Select>
                 </FormControl>
             </div>
         );
     }
+
+
+
 
     console.log(genres)
     return (
@@ -113,11 +122,6 @@ export const MovieFilters = () => {
                 <div style={{ width: 300, margin: 30 }} className="filters__genre">
                     <h4>Genres</h4>
                     {MultipleSelectCheckmarks()}
-                    {/* {genres.map(g => {
-                        return <div>
-                            <h3>{g.name}</h3>
-                            </div>
-                    })} */}
 
                 </div>
                 <div style={{ width: 300, margin: 30 }} className="filters__decade">
@@ -128,12 +132,15 @@ export const MovieFilters = () => {
                 <div style={{ width: 300, margin: 30 }} className="filters__runtime">
                     <h4>Maximum Runtime (minutes)</h4>
                     <Slider
-                        defaultValue={250}
+                        defaultValue={130}
                         aria-label="Small"
                         valueLabelDisplay="auto"
                         // size="small"
-                        max={250}
+                        max={200}
                         min={30}
+                        onChange={(event) => {
+                            setRuntime(event.target.value)
+                        }}
                     />
                 </div>
             </section>

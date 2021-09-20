@@ -20,11 +20,18 @@ export const Login = props => {
     const handleLogin = (e) => {
         e.preventDefault()
 
-        return fetch(`${authApi.localApiBaseUrl}/${authApi.endpoint}`)
+        return fetch(`${authApi.localApiBaseUrl}/login`, {
+            method: "POST",
+                headers: {
+                "Content-Type": "application/json",
+                    "Accept": "application/json"
+            },
+            body: JSON.stringify(loginUser)
+        })
             .then(res => res.json())
             .then(exists => {
                 if (exists) {
-                    localStorage.setItem("app_user_id", exists.id)
+                    sessionStorage.setItem("app_user_id", exists.token)
                         history.push("/")
                 }
                 else {
