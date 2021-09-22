@@ -25,7 +25,6 @@ export const MovieFilters = () => {
 
     useEffect(() => {
         getLatestMovie().then(getGenres)
-        console.log(latestMovie)
     }, [])
 
 
@@ -141,13 +140,6 @@ export const MovieFilters = () => {
             />
         )
     }
-
-
-
-
-
-
-
 
 
 return (
