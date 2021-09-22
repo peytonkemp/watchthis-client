@@ -7,6 +7,7 @@ import { MovieProvider } from "./movies/MovieProvider";
 import { MovieDetail } from "./movies/MovieDetail";
 import { MovieHome } from "./movies/MovieHome";
 import { MovieFilters } from "./movies/MovieFilters";
+import { MovieSelection } from "./movies/MovieSelection";
 // import { MovieOrTv } from "./movies/MovieOrTv";
 
 
@@ -27,9 +28,9 @@ export const ApplicationViews = () => {
                         <MovieFilters />
                     </Route>
                     
-                    {/* <Route exact path="/movieortv">
-                        <MovieOrTv />
-                    </Route> */}
+                    <Route exact path="/movieselection/:movieId(\d+)">
+                        <MovieSelection />
+                    </Route>
 
             </MovieProvider>
         </>
