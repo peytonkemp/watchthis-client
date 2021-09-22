@@ -1,11 +1,12 @@
 import { useContext, useEffect } from "react"
-import { Link } from "react-router-dom"
+import { Link, useHistory } from "react-router-dom"
 import { MovieContext } from "./MovieProvider"
 
 
 export const MovieHome = () => {
     const { upcomingMovies, getUpcomingMovies } = useContext(MovieContext)
-    
+    const history = useHistory()
+
     useEffect(() => {
         getUpcomingMovies()
     }, [])
@@ -17,12 +18,12 @@ export const MovieHome = () => {
     <>
         <header>
             <h1>Watch This</h1>
-            <p>Spend less time searching and more time watching</p>
+            <h4>Spend less time searching and more time watching</h4>
         </header>
         <section>
             <div className="watchThisContainer">
-
-                <button className="watchThisButton">Watch This</button>
+                <p></p>
+                <button className="watchThisButton" onClick={() => { history.push("/filters") }}>Watch This</button>
             </div>
 
 
