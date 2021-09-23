@@ -4,7 +4,7 @@ import { Logout } from "../auth/Logout"
 import { useParams } from "react-router"
 
 export const MovieDetail = () =>{
-    const { movie, getMovieDetails } = useContext(MovieContext)
+    const { movieDetail, getMovieDetails } = useContext(MovieContext)
     const { movieId } = useParams()
 
     useEffect(() => {
@@ -18,7 +18,7 @@ export const MovieDetail = () =>{
             {Logout()}
         </div>
         <div>
-            <h1>{movie.title}</h1>
+            <h1>{movieDetail.title}</h1>
         </div>
         </>
     )

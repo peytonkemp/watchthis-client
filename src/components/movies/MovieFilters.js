@@ -1,31 +1,20 @@
 import Slider from "@mui/material/node/Slider/Slider"
 import * as React from 'react';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import ListItemText from '@mui/material/ListItemText';
-import Select from '@mui/material/Select';
-import Checkbox from '@mui/material/Checkbox';
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormLabel from '@mui/material/FormLabel';
 import { useEffect, useState } from "react";
 import { MovieContext } from "./MovieProvider"
 import { useContext } from "react";
 import { MultiSelect } from "react-multi-select-component";
+import { useHistory } from "react-router";
 
 export const MovieFilters = () => {
-    const { genres, getGenres, getLatestMovie, latestMovie, getMovieById, discoverMovie, movie } = useContext(MovieContext)
-    const [runtime, setRuntime] = useState(0)
+    const { genres, getGenres, getLatestMovie, latestMovie, getMovieById, discoverMovie, movie, discoverMovieList } = useContext(MovieContext)
+    const [runtime, setRuntime] = useState(180)
     const [selectedGenres, setSelectedGenres] = useState([]);
     const [selectedProviders, setSelectedProviders] = useState([]);
+    const history = useHistory()
 
     useEffect(() => {
         getLatestMovie().then(getGenres)
-        console.log(latestMovie)
     }, [])
 
 
@@ -142,13 +131,18 @@ export const MovieFilters = () => {
         )
     }
 
-
-
-
-
-
-
-
+    const handleOnClick = () => {
+        const genresString = selectedGenres.toString()
+        const providersString = selectedProviders.toString()
+        discoverMovie(genresString, providersString, runtime)
+        history.push(`/movieselection/${movie?.id}`)
+    }
+    const list = () => {
+        const genresString = selectedGenres.toString()
+        const providersString = selectedProviders.toString()
+        discoverMovieList(genresString, providersString, runtime)
+        history.push(`/movieselection/list`)
+    }
 
 return (
     <>
@@ -174,11 +168,9 @@ return (
                     <h4>Maximum Runtime (minutes)</h4>
                     {Runtime()}
                 </div>
-                <button onClick={() => {
-                    const genresString = selectedGenres.toString()
-                    const providersString = selectedProviders.toString()
-                    discoverMovie(genresString, providersString, runtime)
-                }} >Watch This</button>
+                <button onClick={handleOnClick} >Watch This</button>
+                <button onClick={list} >View List</button>
+
                 <div>
                     {movie.title}
                 </div>
