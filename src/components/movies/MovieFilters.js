@@ -7,8 +7,8 @@ import { MultiSelect } from "react-multi-select-component";
 import { useHistory } from "react-router";
 
 export const MovieFilters = () => {
-    const { genres, getGenres, getLatestMovie, latestMovie, getMovieById, discoverMovie, movie } = useContext(MovieContext)
-    const [runtime, setRuntime] = useState(0)
+    const { genres, getGenres, getLatestMovie, latestMovie, getMovieById, discoverMovie, movie, discoverMovieList } = useContext(MovieContext)
+    const [runtime, setRuntime] = useState(180)
     const [selectedGenres, setSelectedGenres] = useState([]);
     const [selectedProviders, setSelectedProviders] = useState([]);
     const history = useHistory()
@@ -136,8 +136,14 @@ export const MovieFilters = () => {
         const providersString = selectedProviders.toString()
         discoverMovie(genresString, providersString, runtime)
         history.push(`/movieselection/${movie?.id}`)
-        
     }
+    const list = () => {
+        const genresString = selectedGenres.toString()
+        const providersString = selectedProviders.toString()
+        discoverMovieList(genresString, providersString, runtime)
+        history.push(`/movieselection/list`)
+    }
+
 return (
     <>
             <h1>Filters</h1>
@@ -163,6 +169,8 @@ return (
                     {Runtime()}
                 </div>
                 <button onClick={handleOnClick} >Watch This</button>
+                <button onClick={list} >View List</button>
+
                 <div>
                     {movie.title}
                 </div>

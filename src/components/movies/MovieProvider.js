@@ -5,6 +5,7 @@ export const MovieContext = createContext()
 export const MovieProvider = (props) => {
     const [movies, setMovies] = useState([])
     const [movie, setMovie] = useState({})
+    const [movieList, setMovieList] = useState([])
     const [movieDetail, setMovieDetail] = useState({})
     const [upcomingMovies, setUpcomingMovies] = useState([])
     const [latestMovie, setLatestMovie] = useState({})
@@ -16,6 +17,12 @@ export const MovieProvider = (props) => {
     const getMovieById = (movieId) => {
         return fetch(`https://api.themoviedb.org/3/movie/${movieId}?api_key=${API_KEY}`)
             .then(res => res.json())
+    }
+
+    const discoverMovieList = (genre, watchProvider, runtime) => {
+        return fetch(`https://api.themoviedb.org/3/discover/movie/?api_key=${API_KEY}&with_genres=${genre}&with_watch_providers=${watchProvider}&with_runtime.lte=${runtime}&with_original_language=en&sort_by=popularity.desc`)
+            .then(res => res.json())
+            .then(setMovieList)
     }
 
     const discoverMovie = (genre, watchProvider, runtime) => {
@@ -78,7 +85,7 @@ export const MovieProvider = (props) => {
 
     return (
         <MovieContext.Provider value={{
-            movies, getUpcomingMovies, upcomingMovies, getMovieDetails, getMovieById, movie, getGenres, genres, getLatestMovie, latestMovie, discoverMovie, movieDetail, setMovie, getWatchlist, setWatchlist, watchlist, addMovie, deleteMovie
+            movies, getUpcomingMovies, upcomingMovies, getMovieDetails, getMovieById, movie, getGenres, genres, getLatestMovie, latestMovie, discoverMovie, movieDetail, setMovie, getWatchlist, setWatchlist, watchlist, addMovie, deleteMovie, discoverMovieList, setMovieList, movieList
         }}>
             {props.children}
         </MovieContext.Provider>
