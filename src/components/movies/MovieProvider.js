@@ -10,6 +10,7 @@ export const MovieProvider = (props) => {
     const [latestMovie, setLatestMovie] = useState({})
     const API_KEY = process.env.REACT_APP_WATCHTHIS_API_KEY
     const [genres, setGenres] = useState([])
+    const [watchlist, setWatchlist] = useState([])
 
     
     const getMovieById = (movieId) => {
@@ -51,9 +52,33 @@ export const MovieProvider = (props) => {
             })
     }
 
+    const getWatchlist = () => {
+        return fetch(`http://localhost:8000/watchlist?userId=${sessionStorage.getItem('app_user_id')}`)
+            .then(response => response.json())
+            .then(setWatchlist)
+    }
+
+    const addMovie = movieObj => {
+        return fetch("http://localhost:8000/watchlist", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(movieObj)
+        })
+            .then(getWatchlist)
+    }
+
+    const deleteMovie = movieId => {
+        return fetch(`http://localhost:8000/watchlist/${movieId}`, {
+            method: "DELETE"
+        })
+            .then(getWatchlist)
+    }
+
     return (
         <MovieContext.Provider value={{
-            movies, getUpcomingMovies, upcomingMovies, getMovieDetails, getMovieById, movie, getGenres, genres, getLatestMovie, latestMovie, discoverMovie, movieDetail, setMovie
+            movies, getUpcomingMovies, upcomingMovies, getMovieDetails, getMovieById, movie, getGenres, genres, getLatestMovie, latestMovie, discoverMovie, movieDetail, setMovie, getWatchlist, setWatchlist, watchlist, addMovie, deleteMovie
         }}>
             {props.children}
         </MovieContext.Provider>
