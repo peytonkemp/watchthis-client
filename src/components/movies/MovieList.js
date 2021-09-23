@@ -1,4 +1,4 @@
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 import { Link } from "react-router-dom"
 import { MovieContext } from "./MovieProvider"
 
@@ -7,7 +7,9 @@ import { MovieContext } from "./MovieProvider"
 export const MovieList = () => {
     const { movieList } = useContext(MovieContext)
 
+    // useEffect(() => {
 
+    // })
 
     return (
         <div className="MovieList">
